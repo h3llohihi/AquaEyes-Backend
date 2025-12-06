@@ -1,6 +1,12 @@
 # Use official Bun image
 # See all versions at https://hub.docker.com/r/oven/bun/tags
 FROM oven/bun:1.3.3-slim AS base
+
+# Metadata
+LABEL maintainer="Souphaxay Naovalath"
+LABEL description="AquaEyes Backend - Flood monitoring system API"
+LABEL version="1.0.0"
+
 WORKDIR /usr/src/app
 
 # Install dependencies into temp directory
@@ -21,6 +27,10 @@ ENV NODE_ENV=production
 # Run the app as bun user (better security)
 USER bun
 EXPOSE 4558
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
+  CMD ["bun", "run", "-e", "fetch('http://localhost:4558').then(() => process.exit(0)).catch(() => process.exit(1))"]
 
 # Start the application
 ENTRYPOINT ["bun", "run", "src/app.js"]
