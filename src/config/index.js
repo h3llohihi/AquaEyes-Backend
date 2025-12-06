@@ -1,5 +1,3 @@
-require("dotenv").config();
-
 const config = {
   // server setting
   port: process.env.PORT || 4558,
