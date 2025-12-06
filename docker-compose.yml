@@ -1,0 +1,16 @@
+services:
+  backend:
+    build: .
+    container_name: aquaeyes-backend
+    ports:
+      - "4558:4558"
+    env_file:
+      - .env
+    restart: unless-stopped
+    networks:
+      - aquaeyes-network
+
+networks:
+  aquaeyes-network:
+    driver: bridge
+

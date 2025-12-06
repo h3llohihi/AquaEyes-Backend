@@ -1,6 +1,6 @@
 # Use official Bun image
 # See all versions at https://hub.docker.com/r/oven/bun/tags
-FROM oven/bun:1 AS base
+FROM oven/bun:1.3.3-slim AS base
 WORKDIR /usr/src/app
 
 # Install dependencies into temp directory
