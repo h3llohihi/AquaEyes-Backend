@@ -26,11 +26,14 @@ ENV NODE_ENV=production
 
 # Run the app as bun user (better security)
 USER bun
-EXPOSE 4558
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=10s --retries=3 \
-  CMD ["bun", "run", "-e", "fetch('http://localhost:4558').then(() => process.exit(0)).catch(() => process.exit(1))"]
+# Expose port (Render will use PORT env var, default 4558 for local)
+ENV PORT=4558
+EXPOSE $PORT
+
+# Health check (uses PORT env var)
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
+  CMD bun -e "fetch('http://localhost:' + (process.env.PORT || 4558)).then(() => process.exit(0)).catch(() => process.exit(1))"
 
 # Start the application
 ENTRYPOINT ["bun", "run", "src/app.js"]

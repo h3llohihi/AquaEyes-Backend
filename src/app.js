@@ -71,7 +71,7 @@ app.get("/", (req, res) => {
 config
   .connectDB()
   .then(() => {
-    server.listen(config.port, () => {
+    server.listen(config.port, '0.0.0.0', () => {
       console.log(
         `Server running in ${config.env} mode on port ${config.port}`,
       );
